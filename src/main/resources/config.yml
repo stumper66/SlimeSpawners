@@ -1,0 +1,11 @@
+# to disable all functionality, change to false
+enable-slime-spawners: true
+
+player-required-range: 16
+min-spawn-delay: 200
+max-spawn-delay: 800
+max-nearby-slimes: 6
+spawn-count: 1
+spawn-range: 4
+spawner-delay: 20
+allowing-air-spawning: false

@@ -1,0 +1,14 @@
+name: SlimeSpawners
+version: ${project.version}
+main: me.stumper66.slimespawners.SlimeSpawners
+api-version: '1.13'
+load: POSTWORLD
+author: stumper66
+description: ${project.description}
+website: 'https://github.com/stumper66/SlimeSpawners'
+
+commands:
+  slimespawners:
+    description: Manage SlimeSpawners
+    aliases: [ ss ]
+    usage: /<command>
