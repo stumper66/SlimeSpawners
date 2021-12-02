@@ -10,7 +10,7 @@
     <packaging>jar</packaging>
 
     <name>SlimeSpawners</name>
-    <description>Makes slime spawners work</description>
+    <description>Makes slime spawners work anywhere</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>

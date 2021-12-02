@@ -128,10 +128,12 @@ public class SpawnerProcessor {
             if (blockCandidates.size() >= 6) break;
         }
 
-        if (blockCandidates.size() == 0)
+        if (blockCandidates.isEmpty())
             return null;
 
         Collections.shuffle(blockCandidates);
+
+        // return first block from the candiates that has 2 air spaces above it
         for (final Block block : blockCandidates){
             if (world.getBlockAt(block.getX(), block.getY() + 1, block.getZ()).getType().isAir() &&
                     world.getBlockAt(block.getX(), block.getY() + 2, block.getZ()).getType().isAir())

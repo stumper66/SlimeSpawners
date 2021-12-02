@@ -19,20 +19,18 @@ public class CommandProcessor implements CommandExecutor, TabCompleter {
     private final SlimeSpawners main;
 
     @Override
-    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final @NotNull String [] args) {
+    public boolean onCommand(final @NotNull CommandSender sender, final @NotNull Command cmd, final @NotNull String label, final @NotNull String @NotNull [] args) {
         if (args.length == 0){
             showSyntax(sender, label);
             return true;
         }
 
-        //noinspection SwitchStatementWithTooFewBranches
         switch (args[0].toLowerCase()){
             case "reload":
-                if(args.length != 1) {
-                    showSyntax(sender, label);
-                } else {
-                    doReload(sender);
-                }
+                doReload(sender);
+                break;
+            case "info":
+                showInfo(sender);
                 break;
             default:
                 showSyntax(sender, label);
@@ -43,11 +41,26 @@ public class CommandProcessor implements CommandExecutor, TabCompleter {
     }
 
     private void showSyntax(@NotNull final CommandSender sender, @NotNull final String label) {
-        sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7Syntax: &b/" + label + " reload"));
+        sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7Syntax: &b/" + label + " reload | info"));
+    }
+
+    private void showInfo(@NotNull final CommandSender sender) {
+        final String version = main.getDescription().getVersion();
+        final String description = main.getDescription().getDescription();
+
+        sender.sendMessage(MessageUtils.colorizeAll("\n" +
+                "&b&lSlimeSpawners &fv" + version + "&r\n" +
+                "&7&o" + description + "&r\n" +
+                "&7Created by Stumper66"));
     }
 
     private void doReload(@NotNull final CommandSender sender) {
-        sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7Reloadnig config..."));
+        if (!sender.hasPermission("slimespawners.reload")){
+            sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7You don't have permissions to run this command"));
+            return;
+        }
+
+        sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7Reloading config..."));
         main.loadConfig();
         sender.sendMessage(MessageUtils.colorizeAll("&b&lSlimeSpawners: &7Reload complete."));
     }
@@ -56,7 +69,7 @@ public class CommandProcessor implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(final @NotNull CommandSender commandSender, final @NotNull Command command, final @NotNull String label, final @NotNull String @NotNull [] args) {
         if (args.length == 1)
-            return Collections.singletonList("reload");
+            return List.of("reload", "info");
 
         return Collections.emptyList();
     }

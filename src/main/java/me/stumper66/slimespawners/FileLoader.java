@@ -11,7 +11,8 @@ public class FileLoader {
     static YamlConfiguration loadConfig(final @NotNull SlimeSpawners main){
         final File file = new File(main.getDataFolder(), "config.yml");
 
-        main.saveResource(file.getName(), false);
+        if (!file.exists())
+            main.saveResource(file.getName(), false);
 
         final YamlConfiguration cfg = YamlConfiguration.loadConfiguration(file);
         cfg.options().copyDefaults(true);

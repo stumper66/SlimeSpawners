@@ -11,4 +11,4 @@ commands:
   slimespawners:
     description: 'Manage SlimeSpawners'
     aliases: [ 'ss' ]
-    usage: '/<command> <reload>'
+    usage: '/<command> <reload> | <info>'
