@@ -32,8 +32,10 @@ public class ChunkLoadListener implements Listener {
                     if (world.getBlockAt(x, y, z).getType() != Material.SPAWNER) continue;
 
                     final CreatureSpawner cs = (CreatureSpawner) world.getBlockAt(x, y, z).getState();
-                    if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation()))
+
+                    if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation())) {
                         main.slimeSpawners.put(cs.getLocation(), cs);
+                    }
                 }
             }
         }

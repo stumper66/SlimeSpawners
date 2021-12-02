@@ -38,11 +38,11 @@ public class SlimeSpawners extends JavaPlugin {
     }
 
     @Override
-    public void onDisable(){
+    public void onDisable() {
 
     }
 
-    private void registerCommands(){
+    private void registerCommands() {
         CommandProcessor cmd = new CommandProcessor(this);
         final PluginCommand slimeSpawnersCmd = getCommand("slimespawners");
         if (slimeSpawnersCmd == null)
@@ -51,7 +51,7 @@ public class SlimeSpawners extends JavaPlugin {
             slimeSpawnersCmd.setExecutor(cmd);
     }
 
-    private void registerListeners(){
+    private void registerListeners() {
         final PluginManager pm = Bukkit.getPluginManager();
         pm.registerEvents(new BlockPlaceListener(this), this);
         pm.registerEvents(new BlockBreakListener(this), this);
@@ -59,7 +59,7 @@ public class SlimeSpawners extends JavaPlugin {
         pm.registerEvents(new PlayerInteractEventListener(this), this);
     }
 
-    private void startRunnables(){
+    private void startRunnables() {
         final BukkitRunnable runnable = new BukkitRunnable() {
             @Override
             public void run() {
@@ -70,7 +70,7 @@ public class SlimeSpawners extends JavaPlugin {
         runnable.runTaskTimer(this, 100, 10);
     }
 
-    void loadConfig(){
+    void loadConfig() {
         this.settings = FileLoader.loadConfig(this);
 
         this.isEnabled = settings.getBoolean("enable-slime-spawners", true);

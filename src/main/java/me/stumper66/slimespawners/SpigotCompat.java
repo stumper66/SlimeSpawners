@@ -6,7 +6,9 @@ import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.NotNull;
 
 public class SpigotCompat {
-    public static @NotNull Entity spawnSlime(final @NotNull Location location){
+
+    public static @NotNull Entity spawnSlime(final @NotNull Location location) {
         return location.getWorld().spawnEntity(location, EntityType.SLIME);
     }
+
 }

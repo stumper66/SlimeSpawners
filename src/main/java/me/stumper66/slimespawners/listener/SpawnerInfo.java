@@ -7,6 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SpawnerInfo {
+
     public SpawnerInfo(final @NotNull CreatureSpawner cs, final @NotNull SpawnerOptions options){
         this.cs = cs;
         resetTimeLeft(options);
@@ -22,7 +23,7 @@ public class SpawnerInfo {
                 options.maxSpawnDelay + ThreadLocalRandom.current().nextInt(Math.max(options.maxSpawnDelay - options.minSpawnDelay, 1));
     }
 
-    public String toString(){
+    public String toString() {
         return "Time left: " + delayTimeLeft;
     }
 }

@@ -1,7 +1,6 @@
 package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
-import me.stumper66.slimespawners.Utils;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
@@ -23,9 +22,9 @@ public class BlockPlaceListener implements Listener {
         if (event.getBlockPlaced().getType() != Material.SPAWNER) return;
 
         final CreatureSpawner cs = (CreatureSpawner) event.getBlockPlaced().getState();
-        if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation()))
-            main.slimeSpawners.put(cs.getLocation(), cs);
 
-        Utils.logger.info("recorded the new spawner");
+        if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation())) {
+            main.slimeSpawners.put(cs.getLocation(), cs);
+        }
     }
 }
