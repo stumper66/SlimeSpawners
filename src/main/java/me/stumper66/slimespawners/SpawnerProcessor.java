@@ -1,8 +1,11 @@
 package me.stumper66.slimespawners;
 
 import me.lokka30.microlib.other.VersionUtils;
-import me.stumper66.slimespawners.Listeners.SpawnerInfo;
-import org.bukkit.*;
+import me.stumper66.slimespawners.listener.SpawnerInfo;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Entity;

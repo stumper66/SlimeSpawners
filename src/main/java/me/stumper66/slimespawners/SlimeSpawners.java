@@ -1,10 +1,11 @@
 package me.stumper66.slimespawners;
 
-import me.stumper66.slimespawners.Listeners.BlockBreakListener;
-import me.stumper66.slimespawners.Listeners.BlockPlaceListener;
-import me.stumper66.slimespawners.Listeners.ChunkLoadListener;
-import me.stumper66.slimespawners.Listeners.PlayerInteractEventListener;
-import org.bukkit.*;
+import me.stumper66.slimespawners.listener.BlockBreakListener;
+import me.stumper66.slimespawners.listener.BlockPlaceListener;
+import me.stumper66.slimespawners.listener.ChunkLoadListener;
+import me.stumper66.slimespawners.listener.PlayerInteractEventListener;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.configuration.file.YamlConfiguration;

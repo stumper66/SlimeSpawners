@@ -1,7 +1,6 @@
-package me.stumper66.slimespawners.Listeners;
+package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.CreatureSpawner;

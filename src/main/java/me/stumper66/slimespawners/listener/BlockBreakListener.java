@@ -1,4 +1,4 @@
-package me.stumper66.slimespawners.Listeners;
+package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
 import me.stumper66.slimespawners.Utils;
@@ -10,10 +10,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockBreakListener implements Listener {
-    public BlockBreakListener(final SlimeSpawners main){
+
+    public BlockBreakListener(@NotNull final SlimeSpawners main){
         this.main = main;
     }
-
     private final SlimeSpawners main;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
