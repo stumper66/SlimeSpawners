@@ -1,7 +1,6 @@
-package me.stumper66.slimespawners.Listeners;
+package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
-
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.CreatureSpawner;
@@ -33,8 +32,10 @@ public class ChunkLoadListener implements Listener {
                     if (world.getBlockAt(x, y, z).getType() != Material.SPAWNER) continue;
 
                     final CreatureSpawner cs = (CreatureSpawner) world.getBlockAt(x, y, z).getState();
-                    if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation()))
+
+                    if (cs.getSpawnedType() == EntityType.SLIME && !main.slimeSpawners.containsKey(cs.getLocation())) {
                         main.slimeSpawners.put(cs.getLocation(), cs);
+                    }
                 }
             }
         }

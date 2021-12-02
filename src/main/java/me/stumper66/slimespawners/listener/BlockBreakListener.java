@@ -1,7 +1,6 @@
-package me.stumper66.slimespawners.Listeners;
+package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
-import me.stumper66.slimespawners.Utils;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -10,10 +9,10 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class BlockBreakListener implements Listener {
-    public BlockBreakListener(final SlimeSpawners main){
+
+    public BlockBreakListener(@NotNull final SlimeSpawners main){
         this.main = main;
     }
-
     private final SlimeSpawners main;
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.MONITOR)
@@ -21,6 +20,5 @@ public class BlockBreakListener implements Listener {
         if (event.getBlock().getType() != Material.SPAWNER) return;
 
         main.slimeSpawners.remove(event.getBlock().getLocation());
-        Utils.logger.info("Removed the spawner if it was present");
     }
 }

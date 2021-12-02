@@ -33,8 +33,7 @@ public class SpawnerOptions {
                 sb.append(": ");
                 sb.append(f.get(this));
             }
-        }
-        catch (IllegalAccessException e){
+        } catch (IllegalAccessException e){
             e.printStackTrace();
             return super.toString();
         }

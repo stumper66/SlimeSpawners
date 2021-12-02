@@ -1,10 +1,8 @@
-package me.stumper66.slimespawners.Listeners;
+package me.stumper66.slimespawners.listener;
 
 import me.stumper66.slimespawners.SlimeSpawners;
-import me.stumper66.slimespawners.Utils;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.entity.EntityType;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -28,8 +26,6 @@ public class PlayerInteractEventListener implements Listener {
         if (event.getItem().getType() == Material.SLIME_SPAWN_EGG){
             CreatureSpawner cs = (CreatureSpawner) event.getClickedBlock().getState();
             main.slimeSpawners.put(cs.getLocation(), cs);
-
-            Utils.logger.info("recorded the converted spawner");
         }
     }
 }

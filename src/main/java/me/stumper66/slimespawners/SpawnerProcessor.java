@@ -1,8 +1,11 @@
 package me.stumper66.slimespawners;
 
 import me.lokka30.microlib.other.VersionUtils;
-import me.stumper66.slimespawners.Listeners.SpawnerInfo;
-import org.bukkit.*;
+import me.stumper66.slimespawners.listener.SpawnerInfo;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Particle;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.Entity;
@@ -17,6 +20,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SpawnerProcessor {
+
     public SpawnerProcessor(final SlimeSpawners main) {
         this.main = main;
         this.lastSpawnTimes = new HashMap<>();
@@ -27,7 +31,7 @@ public class SpawnerProcessor {
     private final Map<Location, SpawnerInfo> lastSpawnTimes;
     private final static int ticksPerCall = 10;
 
-    public void loopThruSpawners(){
+    public void loopThruSpawners() {
         if (main.slimeSpawners.isEmpty()) return;
         if (Bukkit.getOnlinePlayers().size() == 0) return;
         if (options == null) return;
@@ -41,7 +45,7 @@ public class SpawnerProcessor {
         }
    }
 
-   private boolean shouldSpawnerSpawnNow(final @NotNull CreatureSpawner cs){
+   private boolean shouldSpawnerSpawnNow(final @NotNull CreatureSpawner cs) {
        SpawnerInfo info;
 
         if (!this.lastSpawnTimes.containsKey(cs.getLocation())){
@@ -56,14 +60,14 @@ public class SpawnerProcessor {
         return info.delayTimeLeft <= 0;
    }
 
-   private void makeParticles(final @NotNull Location location){
+   private void makeParticles(final @NotNull Location location) {
         if (location.getWorld() == null) return;
 
         location.getWorld().spawnParticle(Particle.SMOKE_NORMAL, location, 1, null);
         location.getWorld().spawnParticle(Particle.FLAME, location, 1, null);
    }
 
-   private void spawnSlimes(final @NotNull CreatureSpawner cs){
+   private void spawnSlimes(final @NotNull CreatureSpawner cs) {
         int slimeCount = 0;
         boolean foundPlayer = false;
 
@@ -102,7 +106,7 @@ public class SpawnerProcessor {
     }
 
     @Nullable
-    private Location getSpawnLocation(final @NotNull Location spawnerLocation){
+    private Location getSpawnLocation(final @NotNull Location spawnerLocation) {
         if (spawnerLocation.getWorld() == null) return null;
 
         final World world = spawnerLocation.getWorld();
