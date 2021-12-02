@@ -83,8 +83,8 @@ public class SlimeSpawners extends JavaPlugin {
         spawnerOptions.maxSpawnDelay = settings.getInt("max-spawn-delay", defaults.maxSpawnDelay);
         spawnerOptions.playerRequiredRange = settings.getInt("player-required-range", defaults.playerRequiredRange);
         spawnerOptions.delay = settings.getInt("spawner-delay", defaults.delay);
+        spawnerOptions.allowAirSpawning = settings.getBoolean("allow-air-spawning");
 
         this.spawnerProcessor.options = spawnerOptions;
-        Utils.logger.info("loaded options: " + spawnerOptions);
     }
 }

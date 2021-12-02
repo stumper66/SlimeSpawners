@@ -116,8 +116,10 @@ public class SpawnerProcessor {
             int i1 = y1 + ThreadLocalRandom.current().nextInt(options.spawnRange) - 1;
             int i2 = (int) (z1 + (ThreadLocalRandom.current().nextDouble()) - ThreadLocalRandom.current().nextDouble() * (double) options.spawnRange + 0.5D);
             final Block block = world.getBlockAt(i0, i1, i2);
-            if (block.getType().isSolid() && !blockCandidates.contains(block))
+            if (    options.allowAirSpawning && block.getType().isAir() ||
+                    block.getType().isSolid() && !blockCandidates.contains(block)) {
                 blockCandidates.add(block);
+            }
 
             if (blockCandidates.size() >= 6) break;
         }

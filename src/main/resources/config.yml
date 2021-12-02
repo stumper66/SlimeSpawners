@@ -8,4 +8,4 @@ max-nearby-slimes: 6
 spawn-count: 1
 spawn-range: 4
 spawner-delay: 20
-allowing-air-spawning: false
+allow-air-spawning: false

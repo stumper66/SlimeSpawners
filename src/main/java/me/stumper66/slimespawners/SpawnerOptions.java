@@ -21,6 +21,7 @@ public class SpawnerOptions {
     public int spawnCount;
     public int spawnRange;
     public int delay;
+    public boolean allowAirSpawning;
 
     public String toString(){
         final StringBuilder sb = new StringBuilder();

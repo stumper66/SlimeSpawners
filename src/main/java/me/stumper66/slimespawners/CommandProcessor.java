@@ -52,7 +52,10 @@ public class CommandProcessor implements CommandExecutor, TabCompleter {
 
     @Nullable
     @Override
-    public List<String> onTabComplete(final @NotNull CommandSender commandSender, final @NotNull Command command, final @NotNull String label, final @NotNull String[] args) {
+    public List<String> onTabComplete(final @NotNull CommandSender commandSender, final @NotNull Command command, final @NotNull String label, final @NotNull String @NotNull [] args) {
+        if (args.length == 1)
+            return List.of("reload");
+
         return Collections.emptyList();
     }
 }
