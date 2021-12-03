@@ -1,11 +1,35 @@
 # to disable all functionality, change to false
 enable-slime-spawners: true
 
+# number of blocks a player must be near to a spawner to activate it
 player-required-range: 16
+# the minimum spawn delay amount (in ticks)
 min-spawn-delay: 200
+# the minimum spawn delay amount (in ticks)
 max-spawn-delay: 800
+# the new maximum amount of slimes that are allowed to be within player activation range of this spawner
 max-nearby-slimes: 6
+# how many mobs attempt to spawn
 spawn-count: 1
+# the radius around which the spawner will attempt to spawn mobs in
 spawn-range: 4
+# the spawner's delay (in ticks)
 spawner-delay: 20
+# if false, mobs will only spawn on solid blocks
 allow-air-spawning: false
+
+# the minimum size slimes are allowed to spawn as
+slime-size-min: 1
+# the maximum size slimes are allowed to spawn as
+slime-size-max: 4
+
+# optional: use worldguard regions to define the min and max slime size
+
+#worldguard-regions:
+#  - region1:
+#    slime-size-min: 1
+#    slime-size-max: 2
+
+#  - region2:
+#    slime-size-min: 3
+#    slime-size-max: 4

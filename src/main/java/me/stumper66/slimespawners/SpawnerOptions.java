@@ -12,6 +12,8 @@ public class SpawnerOptions {
         this.spawnRange = 4;
         this.maxNearbySlimes = 6;
         this.delay = 20;
+        this.slimeSizeMin = 1;
+        this.slimeSizeMax = 16;
     }
 
     public int playerRequiredRange;
@@ -21,6 +23,8 @@ public class SpawnerOptions {
     public int spawnCount;
     public int spawnRange;
     public int delay;
+    public int slimeSizeMin;
+    public int slimeSizeMax;
     public boolean allowAirSpawning;
 
     public String toString(){

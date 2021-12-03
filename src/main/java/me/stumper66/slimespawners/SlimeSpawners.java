@@ -8,13 +8,16 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.MemoryConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class SlimeSpawners extends JavaPlugin {
 
@@ -22,6 +25,9 @@ public class SlimeSpawners extends JavaPlugin {
     public YamlConfiguration settings;
     public boolean isEnabled;
     private SpawnerProcessor spawnerProcessor;
+    boolean hasLevelledMobsInstalled;
+    public Plugin levelledMobsPlugin;
+    public Map<String, SpawnerOptions> wgRegionOptions;
 
     @Override
     public void onEnable() {
@@ -31,6 +37,8 @@ public class SlimeSpawners extends JavaPlugin {
         registerCommands();
         registerListeners();
         loadConfig();
+        this.levelledMobsPlugin = Bukkit.getPluginManager().getPlugin("levelledmobs");
+        this.hasLevelledMobsInstalled = this.levelledMobsPlugin != null;
 
         startRunnables();
 
@@ -85,7 +93,58 @@ public class SlimeSpawners extends JavaPlugin {
         spawnerOptions.playerRequiredRange = settings.getInt("player-required-range", defaults.playerRequiredRange);
         spawnerOptions.delay = settings.getInt("spawner-delay", defaults.delay);
         spawnerOptions.allowAirSpawning = settings.getBoolean("allow-air-spawning");
+        spawnerOptions.slimeSizeMin = settings.getInt("slime-size-min", defaults.slimeSizeMin);
+        spawnerOptions.slimeSizeMax = settings.getInt("slime-size-max", defaults.slimeSizeMax);
+        parseWorldGuardRegions(settings.get("worldguard-regions"));
 
         this.spawnerProcessor.options = spawnerOptions;
+    }
+
+    private void parseWorldGuardRegions(final @Nullable Object wgRegions){
+        if (wgRegions == null) return;
+
+        final Map<String, SpawnerOptions> wgRegionOptions = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+
+        //noinspection unchecked
+        for (final LinkedHashMap<String, Object> hashMap : (List<LinkedHashMap<String, Object>>) (wgRegions)) {
+            final ConfigurationSection cs = objTo_CS(hashMap);
+            if (cs == null) return;
+
+            String wgName = null;
+            for (final String hashKey : hashMap.keySet()){
+                wgName = hashKey;
+                break;
+            }
+
+            if (wgName == null) continue;
+            final SpawnerOptions opts = new SpawnerOptions();
+            opts.slimeSizeMin = cs.getInt("slime-size-min", 1);
+            opts.slimeSizeMax = cs.getInt("slime-size-min", 16);
+
+            wgRegionOptions.put(wgName, opts);
+        }
+
+        this.wgRegionOptions = wgRegionOptions;
+    }
+
+    @Nullable
+    private ConfigurationSection objTo_CS(final Object object){
+        if (object == null) return null;
+
+        if (object instanceof ConfigurationSection) {
+            return (ConfigurationSection) object;
+        } else if (object instanceof Map) {
+            final MemoryConfiguration result = new MemoryConfiguration();
+            //noinspection unchecked
+            result.addDefaults((Map<String, Object>) object);
+            return result.getDefaultSection();
+        } else {
+            Utils.logger.warning("couldn't parse Config of type: " + object.getClass().getSimpleName() + ", value: " + object);
+            return null;
+        }
+    }
+
+    static boolean isWorldGuardInstalled() {
+        return Bukkit.getPluginManager().getPlugin("WorldGuard") != null;
     }
 }

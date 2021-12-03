@@ -8,11 +8,9 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Slime;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -32,6 +30,7 @@ public class SpawnerProcessor {
     private final static int ticksPerCall = 10;
 
     public void loopThruSpawners() {
+        if (!main.isEnabled) return;
         if (main.slimeSpawners.isEmpty()) return;
         if (Bukkit.getOnlinePlayers().size() == 0) return;
         if (options == null) return;
@@ -92,13 +91,41 @@ public class SpawnerProcessor {
             if (spawnLocation == null)
                 continue;
 
+            List<String> applicableWG_Regions = null;
+            if (SlimeSpawners.isWorldGuardInstalled())
+                applicableWG_Regions = WorldGuardManager.getWorldGuardRegionsForLocation(cs.getLocation());
+
             // if you're running spigot then they will spawn in with default spawn reason
             // if running paper they will spawn in with spawner spawn reason
             final Entity entity = VersionUtils.isRunningPaper() ?
                 cs.getWorld().spawnEntity(spawnLocation, EntityType.SLIME, CreatureSpawnEvent.SpawnReason.SPAWNER) :
                 SpigotCompat.spawnSlime(spawnLocation);
 
+            SpawnerOptions useOpts = options;
+            final Map<String, SpawnerOptions> wgRegionOptions = main.wgRegionOptions;
+            if (applicableWG_Regions != null && !applicableWG_Regions.isEmpty() && wgRegionOptions != null){
+                for (final String foundRegion : applicableWG_Regions){
+                    if (wgRegionOptions.containsKey(foundRegion)){
+                        useOpts = wgRegionOptions.get(foundRegion);
+                        break;
+                    }
+                }
+            }
+
+            assert entity instanceof Slime;
+            Bukkit.getPluginManager().callEvent(new SpawnerSpawnEvent(entity, cs));
+
             makeParticles(entity.getLocation());
+
+            if (useOpts.slimeSizeMin != 1 || useOpts.slimeSizeMax != 4) {
+                final Slime slime = (Slime) entity;
+                if (useOpts.slimeSizeMin > useOpts.slimeSizeMax) useOpts.slimeSizeMin = useOpts.slimeSizeMax;
+                final int useSize = useOpts.slimeSizeMin == useOpts.slimeSizeMax ?
+                        useOpts.slimeSizeMin :
+                        ThreadLocalRandom.current().nextInt(useOpts.slimeSizeMin, useOpts.slimeSizeMax + 1);
+
+                slime.setSize(useSize);
+            }
 
             slimeCount++;
             if (slimeCount >= options.maxNearbySlimes) break;

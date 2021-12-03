@@ -1,6 +1,7 @@
 name: 'SlimeSpawners'
 version: '${project.version}'
 main: 'me.stumper66.slimespawners.SlimeSpawners'
+softdepend: [ 'WorldGuard' ]
 api-version: '1.13'
 load: 'POSTWORLD'
 author: 'stumper66'
